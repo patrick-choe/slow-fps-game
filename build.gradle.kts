@@ -52,7 +52,7 @@ tasks {
 try {
     publishing {
         publications {
-            create<MavenPublication>("samplePlugin") {
+            create<MavenPublication>("slowFpsGame") {
                 from(components["java"])
 
                 artifact(tasks["sourcesJar"])
@@ -76,9 +76,9 @@ try {
                 }
 
                 pom {
-                    name.set("sample-plugin")
-                    description.set("A sample plugin for spigot 1.12.2")
-                    url.set("https://github.com/patrick-mc/sample-plugin")
+                    name.set("slow-fps-game")
+                    description.set("A very slow fps game in spigot 1.12.2")
+                    url.set("https://github.com/patrick-mc/slow-fps-game")
 
                     licenses {
                         license {
@@ -99,9 +99,9 @@ try {
                     }
 
                     scm {
-                        connection.set("scm:git:git://github.com/patrick-mc/sample-plugin.git")
-                        developerConnection.set("scm:git:ssh://github.com:patrick-mc/sample-plugin.git")
-                        url.set("https://github.com/patrick-mc/sample-plugin")
+                        connection.set("scm:git:git://github.com/patrick-mc/slow-fps-game.git")
+                        developerConnection.set("scm:git:ssh://github.com:patrick-mc/slow-fps-game.git")
+                        url.set("https://github.com/patrick-mc/slow-fps-game")
                     }
                 }
             }
@@ -111,6 +111,6 @@ try {
     signing {
         isRequired = true
         sign(tasks["jar"], tasks["sourcesJar"], tasks["dokkaJar"])
-        sign(publishing.publications["samplePlugin"])
+        sign(publishing.publications["slowFpsGame"])
     }
 } catch (e: groovy.lang.MissingPropertyException) {}

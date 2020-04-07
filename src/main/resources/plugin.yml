@@ -1,23 +1,23 @@
-name: Sample
+name: Slow-FPS
 version: 0.1-beta
-description: A sample plugin for spigot 1.12.2
+description: A very slow fps game in spigot 1.12.2
 api-version: "1.12"
 load: POSTWORLD
 author: PatrickKR
 website: https://github.com/patrick-mc
-main: com.github.patrick.sample.SamplePlugin
+main: com.github.patrick.slowfps.plugin.SlowFpsPlugin
 database: false
 depend: [Tap, Kotlin]
-prefix: RHYTHM
+prefix: SLOWFPS
 commands:
-  sample:
-    description: Sample plugin command
-    aliases: [smpl]
-    permission: command.sample
-    permission-message: You do not have permission to use sample plugin commands.
+  slowfps:
+    description: Slow FPS game command
+    aliases: [sfps]
+    permission: command.slowfps
+    permission-message: You do not have permission to use Slow FPS game commands.
     usage: "Usage: /<command> help"
 default-permission: op
 permissions:
-  command.sample:
+  command.slowfps:
     default: op
-    description: Sample plugin command permission
+    description: Slow FPS game command permission
