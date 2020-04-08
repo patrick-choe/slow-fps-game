@@ -37,7 +37,7 @@ import org.bukkit.inventory.EquipmentSlot
 import kotlin.random.Random.Default.nextInt
 import org.bukkit.util.Vector as BukkitVector
 
-class SlowFpsProjectile(private val player: Player, private val move: BukkitVector, private val tapItemStack: TapItemStack) {
+class SlowFpsProjectile(private val owner: Player, private val move: BukkitVector, private val tapItemStack: TapItemStack) {
     private val tapArmorStand: TapArmorStand = Tap.ENTITY.createEntity(ArmorStand::class.java)
     private val armorStand: ArmorStand?
     private lateinit var position: Location
@@ -51,7 +51,7 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
             isInvisible = true
             setGravity(false)
             setBasePlate(false)
-            player.eyeLocation.let { pos ->
+            owner.eyeLocation.let { pos ->
                 setPositionAndRotation(pos.x, pos.y - 0.5, pos.z, pos.yaw + 90F, 0F)
                 setHeadPose(0F, 0F, pos.pitch + 45F)
             }
@@ -87,8 +87,8 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
 
             var foundPlayer: Player? = null
             var distance = 0.0
-            getOnlinePlayers()?.forEach {
-                if (it != player && player.isValid) {
+            getOnlinePlayers()?.forEach { player ->
+                if (player != owner && player.isValid) {
                     wrapPlayer(player)?.boundingBox?.expand(1.0, 2.0, 1.0)?.calculateRayTrace(vector, target)?.let {
                         val location = player.location
                         val current = position.toVector().distance(BukkitVector(location.x, location.y, location.z))
@@ -100,11 +100,11 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
                 }
             }
             foundPlayer?.let {
-                val location = player.location
+                val location = owner.location
                 EFFECT.firework(builder().color(fromRGB(nextInt(0xFFFFFF)).asRGB()).type(STAR).build(), location.x, location.y, location.z).sendAll()
-                player.noDamageTicks = 0
-                player.damage(0.5)
-                player.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
+                owner.noDamageTicks = 0
+                owner.damage(0.5)
+                owner.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
                 removed = true
             }
         } else destroy()
