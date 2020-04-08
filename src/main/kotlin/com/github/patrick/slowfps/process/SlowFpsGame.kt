@@ -33,23 +33,23 @@ import org.bukkit.event.HandlerList.unregisterAll
 import org.bukkit.scoreboard.DisplaySlot.SIDEBAR
 import org.bukkit.scoreboard.Team
 import java.util.IdentityHashMap
-import java.util.UUID
 
 class SlowFpsGame(teams: HashSet<Team>) {
     companion object {
         var gameStatus = false
         val slowFpsTeams = HashSet<SlowFpsTeam>()
-        val slowFpsPlayers = HashMap<UUID, SlowFpsPlayer>()
-        val onlineSlowFpsPlayers = IdentityHashMap<Player, SlowFpsPlayer>()
+        val slowFpsPlayers = IdentityHashMap<Player, SlowFpsPlayer>()
         val slowFpsProjectiles = HashSet<SlowFpsProjectile>()
     }
 
     init {
         val scoreboard = getScoreboardManager().mainScoreboard
-        scoreboard.getObjective("slowfps")?.apply { this.unregister() }
+        scoreboard.getObjective("slowfps")?.unregister()
         val objective = scoreboard.registerNewObjective("slowfps", "dummy")
         objective.displayName = "   ${DARK_BLUE}Slow FPS   "
         objective.displaySlot = SIDEBAR
+        slowFpsTeams.clear()
+        slowFpsPlayers.clear()
 
         teams.forEach {
             val slowFpsTeam = SlowFpsTeam(it)
@@ -62,8 +62,7 @@ class SlowFpsGame(teams: HashSet<Team>) {
 
             val slowFpsPlayer = slowFpsTeam.slowFpsPlayer
             slowFpsTeams.add(slowFpsTeam)
-            slowFpsPlayers[slowFpsPlayer.uniqueId] = slowFpsPlayer
-            onlineSlowFpsPlayers[slowFpsPlayer.player] = slowFpsPlayer
+            slowFpsPlayers[slowFpsPlayer.player] = slowFpsPlayer
         }
 
         if (teams.isEmpty()) throw IllegalArgumentException("Teams cannot be empty")

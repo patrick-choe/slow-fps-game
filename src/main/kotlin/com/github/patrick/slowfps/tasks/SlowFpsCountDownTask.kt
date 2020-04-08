@@ -20,7 +20,7 @@
 package com.github.patrick.slowfps.tasks
 
 import com.github.noonmaru.tap.packet.Packet.TITLE
-import com.github.patrick.slowfps.process.SlowFpsGame.Companion.onlineSlowFpsPlayers
+import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsPlayers
 import org.bukkit.ChatColor
 
 class SlowFpsCountDownTask : SlowFpsTask {
@@ -35,7 +35,7 @@ class SlowFpsCountDownTask : SlowFpsTask {
             return this
         }
         TITLE.compound("§6START", null, 0, 24, 6).sendAll()
-        onlineSlowFpsPlayers.values.forEach { it.prepare() }
+        slowFpsPlayers.values.forEach { it.prepare() }
         return SlowFpsGameTask()
     }
 

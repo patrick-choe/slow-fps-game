@@ -20,7 +20,7 @@
 package com.github.patrick.slowfps.process
 
 import com.github.noonmaru.tap.Tap.ITEM
-import com.github.patrick.slowfps.process.SlowFpsGame.Companion.onlineSlowFpsPlayers
+import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsPlayers
 import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsProjectiles
 import com.github.patrick.slowfps.utils.SlowFpsProjectile
 import org.bukkit.GameMode.SPECTATOR
@@ -48,7 +48,7 @@ class SlowFpsListener : Listener {
 
     @EventHandler fun onDeath(event: PlayerDeathEvent) {
         val player = event.entity?: return
-        onlineSlowFpsPlayers[player]?.let {
+        slowFpsPlayers[player]?.let {
             it.team.dead = true
             player.gameMode = SPECTATOR
         }
