@@ -100,11 +100,11 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
                 }
             }
             foundPlayer?.let {
-                val location = owner.location
+                val location = it.location
                 EFFECT.firework(builder().color(fromRGB(nextInt(0xFFFFFF)).asRGB()).type(STAR).build(), location.x, location.y, location.z).sendAll()
-                owner.noDamageTicks = 0
-                owner.damage(0.5)
-                owner.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
+                it.noDamageTicks = 0
+                it.damage(0.5)
+                it.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
                 removed = true
             }
         } else destroy()
