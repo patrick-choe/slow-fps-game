@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.patrick-mc"
-version = "0.1-SNAPSHOT"
+version = "1.0"
 
 repositories {
     maven("https://repo.maven.apache.org/maven2/")

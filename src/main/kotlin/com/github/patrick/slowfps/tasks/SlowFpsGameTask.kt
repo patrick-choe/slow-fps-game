@@ -27,8 +27,13 @@ import com.github.patrick.slowfps.process.SlowFpsListener
 import org.bukkit.Bukkit.broadcastMessage
 import org.bukkit.Bukkit.getPluginManager
 
+/**
+ * This class runs while game is ongoing.
+ * If the team size equals
+ */
 class SlowFpsGameTask : SlowFpsTask {
     private var ticks = -1
+
     /**
      * This 'execute' method works like a 'run'
      * method in 'Runnable'

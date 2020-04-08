@@ -23,10 +23,18 @@ import com.github.noonmaru.tap.packet.Packet.TITLE
 import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsPlayers
 import org.bukkit.ChatColor
 
+/**
+ * This class does a countdown before the game starts.
+ */
 class SlowFpsCountDownTask : SlowFpsTask {
     private var ticks = 100
     private val period = 20
     private var countdown = -1
+
+    /**
+     * This 'execute' method works like a 'run'
+     * method in 'Runnable'
+     */
     override fun execute(): SlowFpsTask {
         --ticks
         if (ticks > 0) {

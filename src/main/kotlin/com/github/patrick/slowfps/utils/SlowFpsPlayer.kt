@@ -23,7 +23,13 @@ import org.bukkit.GameMode.ADVENTURE
 import org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH
 import org.bukkit.entity.Player
 
+/**
+ * This class represents the game player of this plugin.
+ */
 class SlowFpsPlayer(val player: Player, val team: SlowFpsTeam) {
+    /**
+     * This sets the player's gameMode to adventure and sets the health to max.
+     */
     fun prepare() {
         player.gameMode = ADVENTURE
         player.health = player.getAttribute(GENERIC_MAX_HEALTH).baseValue

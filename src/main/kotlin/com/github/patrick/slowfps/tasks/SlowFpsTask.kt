@@ -19,6 +19,9 @@
 
 package com.github.patrick.slowfps.tasks
 
+/**
+ * This interface is a parent of all game tasks.
+ */
 interface SlowFpsTask {
     /**
      * This 'execute' method works like a 'run'

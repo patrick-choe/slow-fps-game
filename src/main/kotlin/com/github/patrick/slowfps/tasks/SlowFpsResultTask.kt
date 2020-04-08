@@ -21,11 +21,11 @@ package com.github.patrick.slowfps.tasks
 
 import com.github.noonmaru.tap.packet.Packet.TITLE
 import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsTeams
-import org.bukkit.Bukkit.getOnlinePlayers
 import org.bukkit.ChatColor.RED
-import org.bukkit.GameMode.ADVENTURE
-import org.bukkit.GameMode.CREATIVE
 
+/**
+ * This task prints the result and ends the game.
+ */
 class SlowFpsResultTask : SlowFpsTask {
     /**
      * This 'execute' method works like a 'run'
@@ -33,10 +33,6 @@ class SlowFpsResultTask : SlowFpsTask {
      */
     override fun execute(): SlowFpsTask? {
         TITLE.compound(RED.toString() + "게임종료!", "우승: ${slowFpsTeams.first().displayName}", 5, 60, 10).sendAll()
-        getOnlinePlayers()?.forEach {
-            it?: return@forEach
-            it.gameMode = if (it.isOp) CREATIVE else ADVENTURE
-        }
         return null
     }
 }

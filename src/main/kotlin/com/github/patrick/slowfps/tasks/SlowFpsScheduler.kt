@@ -22,12 +22,17 @@ package com.github.patrick.slowfps.tasks
 import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsProjectiles
 import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsTeams
 import com.github.patrick.slowfps.process.SlowFpsProcess.stopProcess
+import org.bukkit.Bukkit.getOnlinePlayers
+import org.bukkit.GameMode
 
 class SlowFpsScheduler : Runnable {
-    private var rhythmTask: SlowFpsTask? = null
+    private var slowFpsTask: SlowFpsTask? = null
 
+    /**
+     * This initializes the slowFpsTask with the title task.
+     */
     init {
-        rhythmTask = SlowFpsTitleTask()
+        slowFpsTask = SlowFpsTitleTask()
     }
 
     /**
@@ -45,7 +50,13 @@ class SlowFpsScheduler : Runnable {
     override fun run() {
         slowFpsProjectiles.removeIf { it.dead }
         slowFpsTeams.removeIf { it.dead }
-        rhythmTask = rhythmTask?.execute()
-        if (rhythmTask == null) stopProcess()
+        slowFpsTask = slowFpsTask?.execute()
+        if (slowFpsTask == null) {
+            stopProcess()
+            getOnlinePlayers()?.forEach {
+                it?: return@forEach
+                it.gameMode = if (it.isOp) GameMode.CREATIVE else GameMode.ADVENTURE
+            }
+        }
     }
 }

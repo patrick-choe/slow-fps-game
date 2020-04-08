@@ -41,15 +41,28 @@ import org.bukkit.inventory.EquipmentSlot
 import kotlin.random.Random.Default.nextInt
 import org.bukkit.util.Vector as BukkitVector
 
+/**
+ * This class represents the projectile of this game.
+ * When created, it moves slowly until it hits the block or entity,
+ * or run out of time.
+ */
 class SlowFpsProjectile(private val owner: Player, private val move: BukkitVector, private val tapItemStack: TapItemStack) {
     private val tapArmorStand: TapArmorStand = Tap.ENTITY.createEntity(ArmorStand::class.java)
     private val armorStand: ArmorStand?
     private lateinit var position: Location
     private var ticks = 0
     private var removed = false
+
+    /**
+     * This boolean checks whether the projectile is dead,
+     * and should be removed.
+     */
     var dead = false
         private set
 
+    /**
+     * This is called when the new projectile is created.
+     */
     init {
         tapArmorStand.apply {
             isInvisible = true
@@ -67,6 +80,9 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
         }
     }
 
+    /**
+     * This runs every tick until it is removed.
+     */
     fun onUpdate() {
         if (dead) return
         if (!removed) {
@@ -119,6 +135,9 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
         } else destroy()
     }
 
+    /**
+     * This destroys the projectile by sending packet to everyone.
+     */
     fun destroy() {
         dead = true
         ENTITY.destroy(tapArmorStand.id).sendAll()

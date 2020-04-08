@@ -37,7 +37,15 @@ import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
+/**
+ * This class listens to several events and handles them.
+ * This cancels the event affecting on this game.
+ */
 class SlowFpsListener : Listener {
+    /**
+     * Handles the PlayerInteractEvent.
+     * When called, new projectile is created.
+     */
     @EventHandler fun onInteract(event: PlayerInteractEvent) {
         event.isCancelled = true
         val player = event.player

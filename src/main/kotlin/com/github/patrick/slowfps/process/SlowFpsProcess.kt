@@ -25,9 +25,16 @@ import org.bukkit.Bukkit.getScoreboardManager
 import org.bukkit.scoreboard.Team
 import java.lang.Integer.toHexString
 
+/**
+ * This class manages the game by starting and stopping the game.
+ */
 object SlowFpsProcess {
     private var game: SlowFpsGame? = null
 
+    /**
+     * This method starts the game by removing all the teams from scoreboard,
+     * and creating a new game instance along with the information about teams.
+     */
     fun startProcess() {
         if (game != null) broadcast("게임이 이미 진행중입니다.", "command.slowfps").also { return }
         val scoreboard = getScoreboardManager().mainScoreboard?: throw NullPointerException("Scoreboard cannot be null.")
@@ -47,6 +54,9 @@ object SlowFpsProcess {
         game = SlowFpsGame(teams)
     }
 
+    /**
+     * This method stops the ongoing game by unregistering the game process.
+     */
     fun stopProcess() {
         if (game == null) broadcast("진행중인 게임이 없습니다.", "command.slowfps").also { return }
         game?.unregister()

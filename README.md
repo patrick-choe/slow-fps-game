@@ -34,7 +34,7 @@
 >
 >...
 >dependencies {
->    implementation 'com.github.patrick-mc:slow-fps-game:0.1-SNAPSHOT'
+>    implementation 'com.github.patrick-mc:slow-fps-game:1.0'
 >}
 >```
 > ---
@@ -49,6 +49,6 @@
 >
 >...
 >dependencies {
->    implementation("com.github.patrick-mc:slow-fps-game:0.1-SNAPSHOT")
+>    implementation("com.github.patrick-mc:slow-fps-game:1.0")
 >}
 >```

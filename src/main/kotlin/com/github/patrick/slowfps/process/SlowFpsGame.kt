@@ -34,7 +34,14 @@ import org.bukkit.scoreboard.DisplaySlot.SIDEBAR
 import org.bukkit.scoreboard.Team
 import java.util.IdentityHashMap
 
+/**
+ * This class represents the game itself of this plugin.
+ */
 class SlowFpsGame(teams: HashSet<Team>) {
+    /**
+     * This stores the project-wide variables directly
+     * related to the game.
+     */
     companion object {
         var gameStatus = false
         val slowFpsTeams = HashSet<SlowFpsTeam>()
@@ -42,6 +49,9 @@ class SlowFpsGame(teams: HashSet<Team>) {
         val slowFpsProjectiles = HashSet<SlowFpsProjectile>()
     }
 
+    /**
+     * This is called when the new game has initialized.
+     */
     init {
         val scoreboard = getScoreboardManager().mainScoreboard
         scoreboard.getObjective("slowfps")?.unregister()
@@ -70,6 +80,10 @@ class SlowFpsGame(teams: HashSet<Team>) {
         getScheduler().runTaskTimer(instance, SlowFpsScheduler(), 0, 1)
     }
 
+    /**
+     * This method unregisters the game by destroying all projectiles
+     * and canceling tasks and listeners.
+     */
     fun unregister() {
         gameStatus = false
         slowFpsProjectiles.forEach { it.destroy() }

@@ -21,8 +21,11 @@ package com.github.patrick.slowfps.tasks
 
 import com.github.noonmaru.tap.packet.Packet.TITLE
 
+/**
+ * This task prints the title for 60 ticks (3 seconds)
+ */
 class SlowFpsTitleTask : SlowFpsTask {
-    private var ticks: Int = -1
+    private var ticks = -1
 
     /**
      * This 'execute' method works like a 'run'
