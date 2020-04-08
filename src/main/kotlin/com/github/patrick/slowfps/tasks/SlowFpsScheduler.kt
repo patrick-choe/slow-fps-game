@@ -25,6 +25,9 @@ import com.github.patrick.slowfps.process.SlowFpsProcess.stopProcess
 import org.bukkit.Bukkit.getOnlinePlayers
 import org.bukkit.GameMode
 
+/**
+ * This class schedules all the game tasks.
+ */
 class SlowFpsScheduler : Runnable {
     private var slowFpsTask: SlowFpsTask? = null
 
