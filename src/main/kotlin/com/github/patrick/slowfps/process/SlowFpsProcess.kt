@@ -39,6 +39,7 @@ object SlowFpsProcess {
                 val team = scoreboard.registerNewTeam(it.name)?: return@forEach
                 team.prefix = "§${toHexString(it.name.hashCode() and 0xF)}"
                 team.addEntry(it.name)
+                teams.add(team)
             }
         }
 
