@@ -45,7 +45,7 @@ class SlowFpsListener : Listener {
         if (setOf(LEFT_CLICK_AIR, LEFT_CLICK_BLOCK).contains(event.action)) {
             val player = event.player
             event.isCancelled = true
-            slowFpsProjectiles += SlowFpsProjectile(player, player.location.direction.normalize().multiply(0.05), ITEM.fromItemStack(event.item))
+            slowFpsProjectiles += SlowFpsProjectile(player, player.location.direction.normalize(), ITEM.fromItemStack(event.item))
         }
     }
 

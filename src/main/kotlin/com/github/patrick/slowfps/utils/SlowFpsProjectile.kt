@@ -51,8 +51,8 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
             isInvisible = true
             setGravity(false)
             setBasePlate(false)
-            player.location.let { pos ->
-                setPositionAndRotation(pos.x, pos.y - 0.5, pos.z, pos.yaw, 0F)
+            player.eyeLocation.let { pos ->
+                setPositionAndRotation(pos.x, pos.y - 0.5, pos.z, pos.yaw + 90F, 0F)
                 setHeadPose(0F, 0F, pos.pitch + 45F)
             }
         }
@@ -71,10 +71,10 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
                 return
             }
             position = armorStand?.location?: return
-            position.let { tapArmorStand.setPosition(it.x + move.x, it.y + move.y, it.z + move.z) }
+            position.let { tapArmorStand.setPosition(it.x + (move.x / 20), it.y + (move.y / 20), it.z + (move.z / 20)) }
 
             val vector = Vector(position.x, position.y, position.z)
-            val target = vector.add(move.x, move.y, move.z)
+            val target = Vector(vector.x + (move.x / 10), vector.y + (move.y / 10), vector.z + (move.z / 10))
 
             ENTITY.metadata(armorStand).sendAll()
             ENTITY.equipment(tapArmorStand.id, EquipmentSlot.HEAD, tapItemStack).sendAll()
@@ -104,7 +104,7 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
                 EFFECT.firework(builder().color(fromRGB(nextInt(0xFFFFFF)).asRGB()).type(STAR).build(), location.x, location.y, location.z).sendAll()
                 player.noDamageTicks = 0
                 player.damage(0.5)
-                player.velocity = move.normalize()?.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
+                player.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
                 removed = true
             }
         } else destroy()
@@ -112,6 +112,6 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
 
     fun destroy() {
         dead = true
-        ENTITY.destroy(tapArmorStand.id)
+        ENTITY.destroy(tapArmorStand.id).sendAll()
     }
 }
