@@ -27,8 +27,6 @@ import org.bukkit.GameMode.SPECTATOR
 import org.bukkit.event.Cancellable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.block.Action.LEFT_CLICK_AIR
-import org.bukkit.event.block.Action.LEFT_CLICK_BLOCK
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDamageEvent
 import org.bukkit.event.block.BlockPlaceEvent
@@ -42,11 +40,10 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class SlowFpsListener : Listener {
     @EventHandler fun onInteract(event: PlayerInteractEvent) {
-        if (setOf(LEFT_CLICK_AIR, LEFT_CLICK_BLOCK).contains(event.action)) {
-            val player = event.player
-            event.isCancelled = true
-            slowFpsProjectiles += SlowFpsProjectile(player, player.location.direction.normalize(), ITEM.fromItemStack(event.item))
-        }
+        event.isCancelled = true
+        val player = event.player
+        val item = event.item
+        if (item != null) slowFpsProjectiles += SlowFpsProjectile(player, player.location.direction.normalize(), ITEM.fromItemStack(item))
     }
 
     @EventHandler fun onDeath(event: PlayerDeathEvent) {
