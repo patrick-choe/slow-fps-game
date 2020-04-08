@@ -19,9 +19,7 @@
 
 package com.github.patrick.slowfps.process
 
-import org.bukkit.Bukkit.broadcast
-import org.bukkit.Bukkit.getOnlinePlayers
-import org.bukkit.Bukkit.getScoreboardManager
+import org.bukkit.Bukkit.*
 import org.bukkit.scoreboard.Team
 import java.lang.Integer.toHexString
 
@@ -30,13 +28,14 @@ import java.lang.Integer.toHexString
  */
 object SlowFpsProcess {
     private var game: SlowFpsGame? = null
+    private const val PERMISSION = "command.slowfps"
 
     /**
      * This method starts the game by removing all the teams from scoreboard,
      * and creating a new game instance along with the information about teams.
      */
     fun startProcess() {
-        if (game != null) broadcast("게임이 이미 진행중입니다.", "command.slowfps").also { return }
+        if (game != null) broadcast("게임이 이미 진행중입니다.", PERMISSION).also { return }
         val scoreboard = getScoreboardManager().mainScoreboard?: throw NullPointerException("Scoreboard cannot be null.")
         scoreboard.teams.forEach { it.unregister() }
 
@@ -50,7 +49,7 @@ object SlowFpsProcess {
             }
         }
 
-        if (teams.isEmpty()) broadcast("게임 참가자가 없습니다. 서버를 확인하세요", "command.slowfps").also { return }
+        if (teams.isEmpty()) broadcast("게임 참가자가 없습니다. 서버를 확인하세요", PERMISSION).also { return }
         game = SlowFpsGame(teams)
     }
 
@@ -58,7 +57,7 @@ object SlowFpsProcess {
      * This method stops the ongoing game by unregistering the game process.
      */
     fun stopProcess() {
-        if (game == null) broadcast("진행중인 게임이 없습니다.", "command.slowfps").also { return }
+        if (game == null) broadcast("진행중인 게임이 없습니다.", PERMISSION).also { return }
         game?.unregister()
         game = null
     }
