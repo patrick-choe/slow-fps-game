@@ -1,2 +1,2 @@
-rootProject.name = "sample-plugin"
+rootProject.name = "slow-fps-game"
 

@@ -1,4 +1,3 @@
-
 /*
  * Copyright (C) 2020 PatrickKR
  * This program is free software; you can redistribute it and/or
@@ -42,7 +41,11 @@ class SlowFpsCommand : CommandExecutor, TabCompleter {
         when (args[0]) {
             "start" -> startProcess()
             "stop" -> stopProcess()
-            else -> helpCommand(sender)
+            else -> {
+                sender.sendMessage("##### Slow FPS Help #####")
+                sender.sendMessage("/slowfps start: Starts the slow fps game")
+                sender.sendMessage("/slowfps stop: Stops the slow fps game")
+            }
         }
         return true
     }
@@ -60,15 +63,7 @@ class SlowFpsCommand : CommandExecutor, TabCompleter {
      */
     override fun onTabComplete(sender: CommandSender, command: Command, alias: String, args: Array<out String>) =
         when (args.size) {
-            1 -> listOf("help", "start", "stop").filter(args[0])
+            1 -> listOf("help", "start", "stop").filter { it.startsWith(args[0]) }
             else -> emptyList()
         }
-
-    private fun helpCommand(sender: CommandSender) {
-        sender.sendMessage("##### Slow FPS Help #####")
-        sender.sendMessage("/slowfps start: Starts the rhythm game")
-        sender.sendMessage("/slowfps stop: Stops the rhythm game")
-    }
-
-    private fun Iterable<String>.filter(predicate: String) = filter { it.startsWith(predicate) }
 }
