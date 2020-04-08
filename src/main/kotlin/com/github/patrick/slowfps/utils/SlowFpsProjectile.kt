@@ -103,7 +103,7 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
                 val location = it.location
                 EFFECT.firework(builder().color(fromRGB(nextInt(0xFFFFFF)).asRGB()).type(STAR).build(), location.x, location.y, location.z).sendAll()
                 it.noDamageTicks = 0
-                it.damage(3.3)
+                if (it.health > 3.3) it.health -= 3.3 else it.health = 0.0
                 it.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
                 removed = true
             }
