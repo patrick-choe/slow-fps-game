@@ -20,11 +20,8 @@
 package com.github.patrick.slowfps.process
 
 import com.github.noonmaru.tap.Tap.ITEM
-import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsPlayers
 import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsProjectiles
 import com.github.patrick.slowfps.utils.SlowFpsProjectile
-import org.bukkit.ChatColor.WHITE
-import org.bukkit.GameMode.SPECTATOR
 import org.bukkit.event.Cancellable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -35,7 +32,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
-import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryInteractEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.PlayerDropItemEvent
@@ -47,15 +43,6 @@ class SlowFpsListener : Listener {
         val player = event.player
         val item = event.item
         if (item != null) slowFpsProjectiles += SlowFpsProjectile(player, player.location.direction.normalize(), ITEM.fromItemStack(item))
-    }
-
-    @EventHandler fun onDeath(event: PlayerDeathEvent) {
-        val player = event.entity?: return
-        slowFpsPlayers[player]?.let {
-            event.deathMessage = "${it.team.displayName}${WHITE}는 FPS 게임에서 '누군가'의 투사체에 맞아 사망했습니다."
-            it.team.dead = true
-            player.gameMode = SPECTATOR
-        }
     }
 
     @EventHandler fun onEvent(event: BlockBreakEvent) = event.cancel()

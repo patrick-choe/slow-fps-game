@@ -28,8 +28,12 @@ import com.github.noonmaru.tap.firework.FireworkEffect.builder
 import com.github.noonmaru.tap.item.TapItemStack
 import com.github.noonmaru.tap.packet.Packet.EFFECT
 import com.github.noonmaru.tap.packet.Packet.ENTITY
+import com.github.patrick.slowfps.process.SlowFpsGame.Companion.slowFpsPlayers
+import org.bukkit.Bukkit.broadcastMessage
 import org.bukkit.Bukkit.getOnlinePlayers
+import org.bukkit.ChatColor.WHITE
 import org.bukkit.Color.fromRGB
+import org.bukkit.GameMode.SPECTATOR
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
@@ -88,7 +92,7 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
             var foundPlayer: Player? = null
             var distance = 0.0
             getOnlinePlayers()?.forEach { player ->
-                if (player != owner && player.isValid) {
+                if (player != owner && player.isValid && player.gameMode != SPECTATOR) {
                     wrapPlayer(player)?.boundingBox?.expand(1.0, 2.0, 1.0)?.calculateRayTrace(vector, target)?.let {
                         val location = player.location
                         val current = position.toVector().distance(BukkitVector(location.x, location.y, location.z))
@@ -103,7 +107,12 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
                 val location = it.location
                 EFFECT.firework(builder().color(fromRGB(nextInt(0xFFFFFF)).asRGB()).type(STAR).build(), location.x, location.y, location.z).sendAll()
                 it.noDamageTicks = 0
-                if (it.health > 3.3) it.health -= 3.3 else it.health = 0.0
+                if (it.health > 3.3) it.health -= 3.3 else {
+                    val team = (slowFpsPlayers[it]?: return).team
+                    broadcastMessage("${team.displayName}${WHITE}는 FPS 게임에서 ${(slowFpsPlayers[owner]?: return).team.displayName}${WHITE}의 투사체에 맞아 사망했습니다.")
+                    team.dead = true
+                    it.gameMode = SPECTATOR
+                }
                 it.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
                 removed = true
             }
