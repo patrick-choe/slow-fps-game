@@ -32,7 +32,7 @@ class SlowFpsResultTask : SlowFpsTask {
      * method in 'Runnable'
      */
     override fun execute(): SlowFpsTask? {
-        TITLE.compound(RED.toString() + "게임종료!", "우승: ${slowFpsTeams.first().team.prefix + slowFpsTeams.first().team.name}", 5, 60, 10).sendAll()
+        TITLE.compound(RED.toString() + "게임종료!", "우승: ${slowFpsTeams.first().displayName}", 5, 60, 10).sendAll()
         getOnlinePlayers()?.forEach {
             it?: return@forEach
             it.gameMode = if (it.isOp) CREATIVE else ADVENTURE

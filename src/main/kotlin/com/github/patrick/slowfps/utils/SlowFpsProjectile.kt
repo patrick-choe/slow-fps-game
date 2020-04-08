@@ -71,10 +71,10 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
                 return
             }
             position = armorStand?.location?: return
-            position.let { tapArmorStand.setPosition(it.x + (move.x / 20), it.y + (move.y / 20), it.z + (move.z / 20)) }
+            position.let { tapArmorStand.setPosition(it.x + (move.x / 12), it.y + (move.y / 12), it.z + (move.z / 12)) }
 
             val vector = Vector(position.x, position.y, position.z)
-            val target = Vector(vector.x + (move.x / 10), vector.y + (move.y / 10), vector.z + (move.z / 10))
+            val target = Vector(vector.x + (move.x / 8), vector.y + (move.y / 8), vector.z + (move.z / 8))
 
             ENTITY.metadata(armorStand).sendAll()
             ENTITY.equipment(tapArmorStand.id, EquipmentSlot.HEAD, tapItemStack).sendAll()
@@ -103,7 +103,7 @@ class SlowFpsProjectile(private val owner: Player, private val move: BukkitVecto
                 val location = it.location
                 EFFECT.firework(builder().color(fromRGB(nextInt(0xFFFFFF)).asRGB()).type(STAR).build(), location.x, location.y, location.z).sendAll()
                 it.noDamageTicks = 0
-                it.damage(0.5)
+                it.damage(3.3)
                 it.velocity = move.multiply(2)?.let { vector -> BukkitVector(vector.x, vector.y, vector.z) }
                 removed = true
             }

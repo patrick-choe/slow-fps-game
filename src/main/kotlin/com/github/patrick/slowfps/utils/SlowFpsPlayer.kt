@@ -22,13 +22,10 @@ package com.github.patrick.slowfps.utils
 import org.bukkit.GameMode.ADVENTURE
 import org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH
 import org.bukkit.entity.Player
-import java.util.UUID
 
 class SlowFpsPlayer(val player: Player, val team: SlowFpsTeam) {
     fun prepare() {
         player.gameMode = ADVENTURE
         player.health = player.getAttribute(GENERIC_MAX_HEALTH).baseValue
     }
-
-    val uniqueId: UUID = player.uniqueId
 }

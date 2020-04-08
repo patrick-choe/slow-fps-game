@@ -22,7 +22,8 @@ package com.github.patrick.slowfps.utils
 import org.bukkit.entity.Player
 import org.bukkit.scoreboard.Team
 
-class SlowFpsTeam(val team: Team) {
+class SlowFpsTeam(team: Team) {
+    val displayName = team.prefix + team.name
     lateinit var slowFpsPlayer: SlowFpsPlayer
     var dead = false
 
