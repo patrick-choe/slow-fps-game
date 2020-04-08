@@ -73,6 +73,7 @@ class SlowFpsGame(teams: HashSet<Team>) {
 
     fun unregister() {
         gameStatus = false
+        slowFpsProjectiles.forEach { it.destroy() }
         unregisterAll(instance)
         getScheduler().cancelTasks(instance)
     }

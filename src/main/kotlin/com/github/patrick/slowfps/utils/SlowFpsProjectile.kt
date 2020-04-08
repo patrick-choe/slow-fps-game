@@ -110,7 +110,7 @@ class SlowFpsProjectile(private val player: Player, private val move: BukkitVect
         } else destroy()
     }
 
-    private fun destroy() {
+    fun destroy() {
         dead = true
         ENTITY.destroy(tapArmorStand.id)
     }
